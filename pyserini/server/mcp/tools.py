@@ -30,7 +30,7 @@ def register_tools(mcp: FastMCP, controller: SearchController):
 
     @mcp.tool(
         name='search',
-        description='Perform a BM25 search on a given index. Returns top‑k hits with docid, score, and snippet.',
+        description='Perform search on a given index. Returns top‑k hits with docid, score, and snippet.',
     )
     def search(
         query: str,
@@ -38,7 +38,8 @@ def register_tools(mcp: FastMCP, controller: SearchController):
         k: int = 10,
         ef_search: int = 100,
         encoder: str = None,
-        query_generator: str = None
+        query_generator: str = None,
+        fields: list[str] = None
     ) -> dict[str, Any]:
         """
         Search the Pyserini index with BM25 and return top-k hits
@@ -46,10 +47,11 @@ def register_tools(mcp: FastMCP, controller: SearchController):
             query: Search query string
             index_name: Name of index to search (default: use default index)
             k: Number of results to return (default: 10)
+            fields: List of fields to search
         Returns:
             List of search results with docid, score, and raw contents
         """
-        return controller.search(query, index_name, k, ef_search=ef_search, encoder=encoder, query_generator=query_generator)
+        return controller.search(query, index_name, k, ef_search=ef_search, encoder=encoder, query_generator=query_generator, fields=fields)
 
     @mcp.tool(
         name='get_document',

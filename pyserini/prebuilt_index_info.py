@@ -1857,6 +1857,8 @@ TF_INDEX_INFO_OTHER = {
     },
 }
 
+add_lucene_index_info(JIndexInfo.ACL_ANTHOLOGY, TF_INDEX_INFO_OTHER)
+
 TF_INDEX_INFO_OTHER_ALIASES = {
     # To preserve working commands in published papers: integrations/papers/test_sigir2021.py
     "wikipedia-dpr": TF_INDEX_INFO_OTHER["wikipedia-dpr-100w"],

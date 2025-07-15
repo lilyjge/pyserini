@@ -97,6 +97,7 @@ class SearchController:
         ef_search: int | None = None,
         encoder: str | None = None,
         query_generator: str | None = None,
+        fields: list[str] | None = None
     ) -> Hits:
         """Perform search on specified index."""
         hits = []
@@ -113,8 +114,10 @@ class SearchController:
                         query_generator=query_generator
                     )
                 )
-
-            hits = index_config.searcher.search(query, k)
+            if fields != None and index_config.index_type == "tf":
+                hits = index_config.searcher.search(query, k, fields={f: 1 for f in fields})
+            else:
+                hits = index_config.searcher.search(query, k)
 
         results: dict[str, Any] = {'query': {'qid': qid, 'text': query}}
         candidates: list[dict[str, Any]] = []
